@@ -8,18 +8,39 @@
 <body>
   <header>Escape Room: Die verschwundene Prüfung</header>
   <main>
-    <h1>Posten 1</h1>
+    <h1>Posten 4</h1>
     <section class="story" data-aos="fade-up">
-      <p>In der folgenden Morsecode-Zeile stecken drei deutsche Zahlwörter.
-        Entschlüsselt sie und zählt, wie viele Buchstaben jedes Wort hat.
-        🔓 Die Anzahl Buchstaben pro Wort ergibt die 3-stellige Kombination für das Schloss.
-      </p>
-      <p>Morsecode: --.. .-- .. . / ... . -.-. .... ... / ... ..- .--.</p>
-      <p>Tipp: Nutzt ein Morsecode-Alphabet oder den Online-Übersetzer</p>
+      <p>Ihr betretet das Büro des Rektors. Auf seinem Schreibtisch liegt ein altes Dokument mit folgendem Hinweis:</p>
+      <blockquote>„Die Prüfung ist hinter der Logik ihrer eigenen Fragen verborgen. Nur wer den Abschlusstest besteht, findet den Code.“</blockquote>
+      <p>Ihr entdeckt das folgende Prüfungsblatt mit Multiple-Choice-Fragen. Nur eine einzige Kombination ist korrekt – jede richtige Antwort ergibt eine Zahl.</p>
+      <ol>
+        <li><strong>Welche Aussage ist wahr?</strong><br>
+          A. Zwei der Antworten sind korrekt.<br>
+          B. Diese Antwort ist falsch.<br>
+          C. Alle Antworten sind falsch.
+        </li>
+        <li><strong>Wenn eine Aussage falsch ist, welche ist es?</strong><br>
+          A. Diese Antwort ist falsch.<br>
+          B. A ist wahr.<br>
+          C. Beide vorherigen Antworten sind falsch.
+        </li>
+        <li><strong>Welcher Zahlenwert ergibt sich für das Wort „PRÜFUNG“, wenn A=1, B=2 ... Z=26?</strong><br>
+          A. 111<br>
+          B. 115<br>
+          C. 118
+        </li>
+        <li><strong>Wie oft kommt der Buchstabe E in diesem Text vor?</strong><br>
+          A. 7<br>
+          B. 11<br>
+          C. 13
+        </li>
+      </ol>
+      <p><strong>Hinweis:</strong> Verwandle die Buchstaben deiner Antworten (z. B. „ABCA“) in Zahlen gemäß:<br>
+      A = 1, B = 2, C = 3</p>
     </section>  
     <input type="text" id="answer" placeholder="123">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
-    <button id="nextButton" hidden>Posten 2</button>
+    <button id="nextButton" hidden>Fertig</button>
     <p id="message"></p>
   </main>
 
@@ -30,7 +51,7 @@
     const lockDuration = 15000; // 15 secondes
     const nextButton = document.getElementById('nextButton');
     nextButton.addEventListener('click', () => {
-      window.location.href = '/posten2';
+      window.location.href = '/';
     });
 
     function checkAnswer() {
@@ -43,8 +64,8 @@
         return;
       }
 
-      if (answer.trim() === "456") {
-        message.textContent = "✅ Bravo! Deine Zahl ist: 456";
+      if (answer.trim() === "2312") {
+        message.textContent = "✅ Glückwunsch! Der Code ist korrekt: 2312";
         message.style.color = "lightgreen";
         document.getElementById('answer').disabled = true;
         button.disabled = true;

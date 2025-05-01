@@ -104,6 +104,9 @@ router.get('/posten2', requireProgress(2), (req, res) => {
 router.get('/posten3', requireProgress(3), (req, res) => {
   res.sendFile(path.join(__dirname, '../views/posten3.html'));
 });
+router.get('/posten4', requireProgress(3), (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/posten4.html'));
+});
 
 router.post('/progress/:posten', async (req, res) => {
   console.log('🔄 updateProgress', req.session.teamName, req.params.posten);
