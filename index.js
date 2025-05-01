@@ -5,14 +5,14 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const cron = require('node-cron');
-const SQLiteStore = require('connect-sqlite3')(session);
-const sqliteStore = new SQLiteStore({
-  db: './sessions.sqlite', // plus simple, racine du projet
-  table: 'sessions'
+const MongoStore = require('connect-mongo');
+
+const mongoStore = MongoStore.create({
+  mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/escapeRoomSessions'
 });
 
 app.use(session({
-  store: sqliteStore,
+  store: mongoStore,
   secret: process.env.SESSION_SECRET || 'dev-secret',
   resave: false,
   saveUninitialized: false,
@@ -20,8 +20,6 @@ app.use(session({
     maxAge: 1000 * 60 * 20 // 20 minutes
   }
 }));
-
-app.set('sessionStore', sqliteStore); // utile pour les cron
 
 const { v4: uuidv4 } = require('uuid');
 const multer = require('multer');
@@ -74,18 +72,6 @@ app.use((req, res, next) => {
   next();
 });
 
-cron.schedule('0 0 * * *', () => {
-  sqliteStore.db.serialize(() => {
-    sqliteStore.db.run(
-      `DELETE FROM sessions WHERE expiry <= strftime('%s','now')`,
-      err => {
-        if (err) console.error('❌ Erreur purge sessions :', err);
-        else console.log('🧹 Purge sessions expirées terminée');
-      }
-    );
-  });
-});
-
 cron.schedule('0 1 * * *', () => {
   const db = require('./dataStore').db;
   db.run(
@@ -125,4 +111,3 @@ app.use('/', gameRoutes);
 app.use('/admin', adminRoutes);
 
 module.exports = app;
-
