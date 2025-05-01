@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Final</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Entrée du code final</h1>
+  <p>Entrez les 5 chiffres trouvés :</p>
+  <input type="text" id="finalcode" placeholder="Code à 5 chiffres">
+  <button onclick="validateCode()">Valider</button>
+  <p id="result"></p>
+
+  <script>
+    function validateCode() {
+      const code = document.getElementById('finalcode').value;
+      if (code === "58324") {
+        document.getElementById('result').textContent = "Félicitations, vous avez retrouvé l'examen perdu ! 🎉";
+      } else {
+        document.getElementById('result').textContent = "Ce n'est pas le bon code, réessayez !";
+      }
+      fetch('/progress/finalCode', { method: 'POST' });
+    }
+  </script>
+</body>
+</html>

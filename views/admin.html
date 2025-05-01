@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Suivi des élèves - Escape Room</title>
+  <link rel="stylesheet" href="/css/style.css">  
+</head>
+<audio id="bgm" autoplay loop>
+  <source src="./audio/evasion.mp3" type="audio/mpeg">
+  Ton navigateur ne supporte pas l'audio HTML5.
+</audio>
+<body>
+  <button id="startGameBtn" style="margin: 1rem; padding: 0.6rem 1.2rem; font-size: 1rem;">🚀 Lancer le jeu</button>
+  <button onclick="window.open('/results', '_blank')" style="margin: 1rem; padding: 0.6rem 1.2rem; background: seagreen; color: white;">📊 Voir le classement</button>
+  <button id="resetGameBtn" style="margin: 1rem; padding: 0.6rem 1.2rem; background: crimson; color: white;">🔁 Reset Jeu</button>
+  <p id="launchStatus" style="color: green;"></p>
+  <h2 id="countdown" style="color: darkorange; font-size: 1.4rem;"></h2>
+  <h1>Tableau de progression des élèves</h1>
+  <p id="error" style="color:red;"></p>
+  <table id="progressTable">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Équipe</th>
+        <th>Progression</th>
+        <th>Posten 1</th>
+        <th>Posten 2</th>
+        <th>Posten 3</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

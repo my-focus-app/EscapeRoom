@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Connexion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: url('./img/image.png') no-repeat center center fixed;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #ecf0f1;
+  }
+  .container {
+    background: rgba(44,62,80,0.85);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  .container h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+  .container p {
+    margin-bottom: 1.5rem;
+    color: #bdc3c7;
+  }
+  .input-field {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+  }
+  .input-field::placeholder {
+    color: #95a5a6;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    background: #e67e22;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .btn-primary:hover {
+    background: #d35400;
+  }
+  #avatarPreview {
+    margin: 0 auto 1rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #7f8c8d;
+    background-size: cover;
+    background-position: center;
+  }
+  .file-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+  }
+  .glitch-text {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #ecf0f1;
+    animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  @keyframes blink-caret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #ecf0f1; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="glitch-text">Herzlich willkommen</h1>
+    <p>Entrez le nom de votre équipe pour démarrer l'escape game.</p>
+    <form id="teamForm" enctype="multipart/form-data">
+      <input type="text" name="teamName" placeholder="Nom de l’équipe" class="input-field" required />
+      <div id="avatarPreview"></div>
+      <label for="avatarFile" class="file-label">Logo de l’équipe (optionnel)</label>
+      <input type="file" name="avatarFile" accept="image/*" class="input-field" />
+      <button type="submit" class="btn-primary">Rejoindre</button>
+    </form>
+  </div>
+
+  <script src="/js/home.js"></script>
+</body>
+</html>

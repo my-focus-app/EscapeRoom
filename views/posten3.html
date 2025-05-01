@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Escape Room: Die verschwundene Prüfung</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>Escape Room: Die verschwundene Prüfung</header>
+  <main>
+    <h1>Posten 3</h1>
+    <section class="story" data-aos="fade-up">
+      <p>Im Raum ist ein geheimnisvoller Zettel versteckt. 
+        Aber irgendwas stimmt mit dem Text nicht… Kannst du ihn lesen? 
+        Tipp: Ein Spiegel hilft dir weiter.</p>
+    </section>  
+    <input type="text" id="answer" placeholder="Geben Sie ein">
+    <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
+    <p id="message"></p>
+  </main>
+
+  <script>
+    let attempts = 0;
+    const maxAttempts = 3;
+    const lockDuration = 60000;
+
+    function checkAnswer() {
+      const answer = document.getElementById('answer').value;
+      const message = document.getElementById('message');
+      const button = document.getElementById('validateButton');
+
+      if (attempts >= maxAttempts) {
+        message.textContent = "Sie sind gesperrt. Bitte warten Sie 1 Minute...";
+        return;
+      }
+
+      if (answer.trim() === "5") {
+        message.textContent = "✅ Bravo!";
+        message.style.color = "lightgreen";
+        document.getElementById('answer').disabled = true;
+        button.disabled = true;
+
+        // Notifie le serveur
+        fetch('/progress/posten3', { method: 'POST' })
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          message.textContent = "🚫 Zu viele Versuche 1 Minute lang blockiert";
+          message.style.color = "red";
+          button.disabled = true;
+          setTimeout(() => {
+            attempts = 0;
+            message.textContent = "Sie können es noch einmal versuchen.";
+            button.disabled = false;
+          }, lockDuration);
+        } else {
+          message.textContent = `falsche Antwort, Versuch ${attempts}/${maxAttempts}.`;
+          message.style.color = "orange";
+        }
+      }
+    }
+
+    setInterval(() => {
+    fetch('/api/status')
+      .then(res => res.json())
+      .then(data => {
+        if (data.timeLeft !== null && data.timeLeft <= 0) {
+          window.location.href = '/results';
+        }
+      });
+  }, 3000);
+  </script>
+</body>
+</html>

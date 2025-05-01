@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Classement final</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 3rem; }
+    h1 { margin-bottom: 2rem; }
+    table { margin: auto; border-collapse: collapse; width: 80%; max-width: 600px; }
+    th, td { border: 1px solid #ccc; padding: 0.8rem; }
+    img { border-radius: 50%; width: 40px; height: 40px; }
+  </style>
+</head>
+<body>
+  <h1>🏆 Classement des équipes</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Avatar</th>
+        <th>Équipe</th>
+        <th>Durée</th>
+      </tr>
+    </thead>
+    <tbody id="resultsTable"></tbody>
+  </table>
+
+  <script>
+    fetch('/api/progress')
+      .then(res => res.json())
+      .then(data => {
+        const rows = Object.entries(data)
+          .filter(([, team]) => team.finalCode && team.startTime && team.endTime)
+          .map(([name, team]) => ({
+            name: team.name,
+            avatar: team.avatar || '/avatars/default.png',
+            duration: new Date(team.endTime) - new Date(team.startTime)
+          }))
+          .sort((a, b) => a.duration - b.duration);
+
+        const tbody = document.getElementById('resultsTable');
+        rows.forEach((team, i) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td><img src="${team.avatar}"></td>
+            <td>${team.name}</td>
+            <td>${Math.round(team.duration / 1000)}s</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
+</body>
+</html>

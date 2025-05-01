@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title || 'Escape Room' }}</title>
+  <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+  <!-- Navbar -->
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Escape Room</h1>
+    <nav class="space-x-4">
+      <a href="/" class="hover:underline">Accueil</a>
+      <a href="/admin" class="hover:underline">Admin</a>
+      <a href="/results" class="hover:underline">Classement</a>
+    </nav>
+  </header>
+
+  <!-- Contenu -->
+  <main class="p-6">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+    Escape Room © 2025
+  </footer>
+</body>
+</html>
