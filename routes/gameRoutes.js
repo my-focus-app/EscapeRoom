@@ -33,10 +33,13 @@ router.get('/results', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/results.html'));
 });
 
+const { upload } = require('../index');
+
 router.post(
   '/set-team',
   /* … multipart/form-data middleware … */
   // 2) validation
+  upload.single('avatarFile'),
   body('teamName')
     .trim()
     .notEmpty().withMessage('Le nom d’équipe est requis.')
