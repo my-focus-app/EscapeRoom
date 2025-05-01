@@ -3,33 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <title>Schülerbetreuung - Escape Room</title>
-  <link rel="stylesheet" href="/css/style.css">  
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    table {
+      margin: 2rem auto;
+      border-collapse: collapse;
+      font-size: 1.2rem;
+      width: 80%;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 1rem;
+    }
+    th {
+      background-color: #222;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+    img.avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+  </style>
 </head>
-<audio id="bgm" autoplay loop>
-  <source src="./audio/evasion.mp3" type="audio/mpeg">
-  Dein Browser unterstützt kein HTML5-Audio
-</audio>
 <body>
-  <button id="startGameBtn" style="margin: 1rem; padding: 0.6rem 1.2rem; font-size: 1rem;">🚀 Lancer le jeu</button>
-  <button onclick="window.open('/results', '_blank')" style="margin: 1rem; padding: 0.6rem 1.2rem; background: seagreen; color: white;">📊 Voir le classement</button>
-  <button id="resetGameBtn" style="margin: 1rem; padding: 0.6rem 1.2rem; background: crimson; color: white;">🔁 Reset Spiel</button>
+  <audio id="bgm" autoplay loop>
+    <source src="./audio/evasion.mp3" type="audio/mpeg">
+    Dein Browser unterstützt kein HTML5-Audio
+  </audio>
+  <h1>Interface Admin</h1>
+  <button id="startGameBtn">Spiel starten</button>
+  <button id="resetGameBtn" style="background: crimson; color: white;">🔁 Reset Spiel</button>
   <p id="launchStatus" style="color: green;"></p>
-  <h2 id="countdown" style="color: darkorange; font-size: 1.4rem;"></h2>
-  <h1>Tabelle mit den Fortschritten der Schülerinnen und Schüler</h1>
-  <p id="error" style="color:red;"></p>
+  <h2 id="countdown" style="color: darkorange;"></h2>
+
   <table id="progressTable">
     <thead>
       <tr>
         <th>Avatar</th>
         <th>Team</th>
-        <th>Progress</th>
-        <th>Posten 1</th>
-        <th>Posten 2</th>
-        <th>Posten 3</th>
+        <th>Suppr.</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/admin.js"></script>
 </body>

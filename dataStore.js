@@ -48,6 +48,15 @@ function getAll() {
   });
 }
 
+function removeTeam(teamName) {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM students WHERE teamName = ?', [teamName], err => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
+
 // Add or replace a team entry
 function addTeam({ teamName, avatar }) {
   return new Promise((resolve, reject) => {
@@ -95,5 +104,6 @@ module.exports = {
   getAll,
   addTeam,
   updateProgress,
-  reloadInto
+  reloadInto,
+  removeTeam
 };

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>En attente du jeu</title>
+  <title>Warten auf das Spiel</title>
   <style>
     body {
       font-family: sans-serif;
@@ -67,20 +67,24 @@
       <div id="avatar"></div>
       <h2 id="teamName"></h2>
     </div>
-    <h1 class="glitch-text">🕒 En attente du lancement...</h1>
-    <p>Veuillez patienter, le jeu va bientôt commencer.</p>
+    <h1 class="glitch-text">Warten auf das Spiel🕒 Warten auf den Start...</h1>
+    <p>Bitte haben Sie etwas Geduld, das Spiel beginnt in Kürze.</p>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
 
+    socket.on('startGame', () => {
+      window.location.href = '/accueil';
+    });
+
     function refreshStatus() {
       fetch('/api/status')
         .then(res => res.json())
         .then(data => {
           if (data.gameStarted) {
-            window.location.href = '/';
+            // Désactivé car redirigé via socket.io
           }
         });
     }

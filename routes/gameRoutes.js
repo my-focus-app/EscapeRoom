@@ -33,20 +33,23 @@ router.get('/results', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/results.html'));
 });
 
-const { upload } = require('../index');
-
 router.post(
   '/set-team',
+  (req, res, next) => {
+    if (!req.upload || !req.upload.single) {
+      return res.status(500).send('Multer non initialisé');
+    }
+    req.upload.single('avatarFile')(req, res, next);
+  },
   /* … multipart/form-data middleware … */
   // 2) validation
-  upload.single('avatarFile'),
   body('teamName')
     .trim()
-    .notEmpty().withMessage('Le nom d’équipe est requis.')
-    .isLength({ max: 30 }).withMessage('30 caractères max.')
+    .notEmpty().withMessage('Der Teamname ist erforderlich.')
+    .isLength({ max: 30 }).withMessage('30 Zeichen max.')
     .custom(async name => {
       const all = await dataStore.getAll();
-      if (all[name]) throw new Error('Nom déjà pris.');
+      if (Object.keys(all).includes(name)) throw new Error('Bereits vergebener Name.');
       return true;
     }),
   // 3) handler
