@@ -11,10 +11,10 @@
   "description": "",
   "dependencies": {
     "better-sqlite3": "^11.9.1",
-    "connect-mongo": "^5.1.0",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
+    "mongodb": "^6.16.0",
     "multer": "^1.4.5-lts.2",
     "muster": "^0.9.3",
     "node-cron": "^3.0.3",

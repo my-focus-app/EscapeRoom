@@ -5,14 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const cron = require('node-cron');
-const MongoStore = require('connect-mongo');
-
-const mongoStore = MongoStore.create({
-  mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/escapeRoomSessions'
-});
-
 app.use(session({
-  store: mongoStore,
   secret: process.env.SESSION_SECRET || 'dev-secret',
   resave: false,
   saveUninitialized: false,
