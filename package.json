@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "jest --detectOpenHandles --forceExit",
-    "test:cov": "jest --coverage"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "better-sqlite3": "^11.9.1",
     "connect-sqlite3": "^0.9.15",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
@@ -25,18 +24,17 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "sqlite3": "^5.1.7",
     "supertest": "^7.1.0"
   },
   "jest": {
-  "testEnvironment": "node",
-  "coverageThreshold": {
-    "global": {
-      "branches": 80,
-      "functions": 80,
-      "lines": 80,
-      "statements": 80
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
     }
   }
-}
 }
