@@ -10,6 +10,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+    sameSite: 'lax', // ou 'none' si https
+    secure: true,
     maxAge: 1000 * 60 * 20 // 20 minutes
   }
 }));
