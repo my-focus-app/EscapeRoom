@@ -80,7 +80,7 @@
             credentials: 'include'    // <-- force l’envoi des cookies de session
             })
             .then(res => {
-              console.log('POST /progress/posten1 →', res.status);
+              console.log('POST /progress/ →', res.status);
               if (!res.ok) throw new Error('Échec enregistrement progrès');
               return res.json();
             })
