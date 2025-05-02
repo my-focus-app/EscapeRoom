@@ -1,6 +1,8 @@
 // index.js
 const express = require('express')
 const app = express();;
+// Trust the first proxy (e.g. Render) so secure cookies work behind HTTPS termination
+app.set('trust proxy', 1);
 const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
@@ -11,7 +13,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     sameSite: 'lax', // ou 'none' si https
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 1000 * 60 * 20 // 20 minutes
   }
 }));

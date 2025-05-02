@@ -29,7 +29,8 @@ form.onsubmit = async e => {
 
   const res = await fetch('/set-team', {
     method: 'POST',
-    body: formData
+    body: formData,
+    credentials: 'same-origin'
   });
 
   if (res.ok) {
