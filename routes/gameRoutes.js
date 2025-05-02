@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const dataStore = require('../dataStore');
 const { body, validationResult } = require('express-validator');
+const multer = require('multer');
 
 const router = express.Router();
 
