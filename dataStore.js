@@ -107,3 +107,14 @@ module.exports = {
   reloadInto,
   removeTeam
 };
+
+function clearAll() {
+  return new Promise((resolve, reject) => {
+    db.exec('DELETE FROM students', err => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
+
+module.exports.clearAll = clearAll;

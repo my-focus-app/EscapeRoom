@@ -40,7 +40,6 @@
     </section>  
     <input type="text" id="answer" placeholder="123">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
-    <button id="nextButton" hidden>Fertig</button>
     <p id="message"></p>
   </main>
 
@@ -84,7 +83,9 @@
               if (!res.ok) throw new Error('Échec enregistrement progrès');
               return res.json();
             })
-            .then(() => nextButton.hidden = false)
+            .then(() => {
+              alert("🎉 Glückwunsch! Ihr habt das Spiel gewonnen!");
+            })
             .catch(err => {
               console.error(err);
               message.textContent = 'Erreur interne, réessayez';
