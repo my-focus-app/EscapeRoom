@@ -36,6 +36,8 @@ form.onsubmit = async e => {
   if (res.ok) {
     window.location.href = '/waiting';
   } else {
-    alert("Erreur lors de la création du groupe.");
+    const errorText = await res.text();
+    console.error('Erreur lors de la création du groupe', res.status, errorText);
+    alert(`Erreur ${res.status} : ${errorText}`);
   }
 };
