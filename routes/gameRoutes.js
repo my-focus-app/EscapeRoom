@@ -39,7 +39,13 @@ router.post(
     if (!req.upload || !req.upload.single) {
       return res.status(500).send('Multer non initialisé');
     }
-    req.upload.single('avatarFile')(req, res, next);
+    req.upload.single('avatarFile')(req, res, err => {
+      if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).send('Image trop lourde : max 10 Mo');
+      }
+      if (err) return next(err);
+      next();
+    });
   },
   /* … multipart/form-data middleware … */
   // 2) validation
