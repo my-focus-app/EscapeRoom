@@ -46,12 +46,7 @@ router.post(
   body('teamName')
     .trim()
     .notEmpty().withMessage('Der Teamname ist erforderlich.')
-    .isLength({ max: 30 }).withMessage('30 Zeichen max.')
-    .custom(async name => {
-      const all = await dataStore.getAll();
-      if (Object.keys(all).includes(name)) throw new Error('Bereits vergebener Name.');
-      return true;
-    }),
+    .isLength({ max: 30 }).withMessage('30 Zeichen max.'),
   // 3) handler
   async (req, res, next) => {
     const errors = validationResult(req);
