@@ -1,64 +1,64 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
   <title>Warten auf das Spiel</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: url('./img/waiting.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      --panel-bg: rgba(0,0,0,.45);
+      --text: #ecf0f1;
+      --muted: #bdc3c7;
+      --shadow: 0 8px 16px rgba(0,0,0,.35);
+    }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ height:100%; }
+    body{
+      margin:0;
+      min-height:100svh; /* better than 100vh on mobile */
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      display:grid; place-items:center;
+      padding:max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      background: url('./img/waiting.jpg') no-repeat center/cover;
+      background-attachment: scroll;
+    }
+    @media (min-width: 900px){ body{ background-attachment: fixed; } }
+
+    #container{
+      width:min(92vw, 560px);
+      text-align:center;
+      backdrop-filter:saturate(1.05) blur(3px);
+      background-color: var(--panel-bg);
+      padding: clamp(1rem, 3vw, 1.75rem);
+      border-radius:12px;
+      box-shadow: var(--shadow);
     }
 
-    #container {
-      text-align: center;
-      backdrop-filter: blur(3px);
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 2rem;
-      border-radius: 10px;
+    #avatar{
+      width: clamp(72px, 18vw, 96px);
+      height: clamp(72px, 18vw, 96px);
+      border-radius:50%;
+      background:#333;
+      margin: 0 auto .5rem;
+      background-size:cover; background-position:center;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,.35);
     }
 
-    #avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #333;
-      margin: 0 auto;
-      background-size: cover;
-      background-position: center;
-    }
+    #teamName{ margin: .25rem 0 .75rem; font-size: clamp(1.1rem, 3vw, 1.35rem); font-weight: 600; }
+    h1{ margin:.25rem 0 .5rem; font-size: clamp(1.1rem, 3.8vw, 1.6rem); line-height:1.25; }
+    p{ margin:0; color: var(--muted); font-size: clamp(.95rem, 2.6vw, 1.05rem); }
 
-    #teamName {
-      margin-top: 1rem;
-    }
+    .glitch-text{ display:inline-block; overflow:hidden; white-space:nowrap; border-right:2px solid currentColor; animation: typing 2.2s steps(30,end), blink-caret .75s step-end infinite; max-width:100%; }
+    @keyframes typing{ from{ width:0 } to{ width:100% } }
+    @keyframes blink-caret{ 0%,100%{ border-color: transparent } 50%{ border-color: currentColor } }
 
-    .glitch-text {
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid white;
-      animation:
-        typing 3s steps(30, end),
-        blink-caret 0.75s step-end infinite;
-      font-size: 1.5rem;
-      max-width: 100%;
-    }
+    /* Respect user who prefers reduced motion */
+    @media (prefers-reduced-motion: reduce){ .glitch-text{ animation:none; border-right:none; } }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      0%, 100% { border-color: transparent }
-      50% { border-color: white }
-    }
+    /* Landscape phones */
+    @media (max-height: 480px) and (orientation: landscape){ body{ padding:.5rem; } #container{ padding:1rem; } }
   </style>
 </head>
 <body>

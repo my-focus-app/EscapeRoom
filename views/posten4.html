@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Escape Room: Die verschwundene Prüfung</title>
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root{
+      --panel-bg: rgba(44,62,80,0.85);
+      --text:#ecf0f1; --muted:#bdc3c7; --accent:#e67e22; --accent-hover:#d35400;
+    }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ height:100%; }
+    body{ margin:0; min-height:100svh; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; display:grid; place-items:center; padding:max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+    header{ text-align:center; margin-bottom:.5rem; font-weight:600; font-size:clamp(1rem,2.5vw,1.25rem); }
+    main{ width:min(92vw,560px); background:var(--panel-bg); border-radius:12px; padding:clamp(1rem,3vw,1.5rem); backdrop-filter:saturate(1.1) blur(3px); box-shadow:0 8px 16px rgba(0,0,0,.3); }
+    h1{ margin:0 0 .75rem; font-size:clamp(1.4rem,3.5vw,2rem); line-height:1.2; }
+    .story p, .story li, .story blockquote{ color:var(--muted); }
+    ol{ padding-left: 1.1rem; }
+    code, kbd { display:inline-block; padding:.1rem .35rem; border-radius:6px; background:rgba(0,0,0,.25); }
+    #answer{ width:100%; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; }
+    #validateButton{ width:100%; padding:.9rem 1rem; border:none; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#fff; }
+    #validateButton:hover{ background:var(--accent-hover); }
+    #validateButton:active{ transform:translateY(1px); }
+    @media (max-height:480px) and (orientation:landscape){ body{ padding:.5rem; } main{ padding:1rem; } }
+  </style>
 </head>
 <body>
   <header>Escape Room: Die verschwundene Prüfung</header>
   <main>
     <h1>Posten 4</h1>
     <section class="story" data-aos="fade-up">
-      <p>Ihr betretet das Büro des Rektors. Auf seinem Schreibtisch liegt ein altes Dokument mit folgendem Hinweis:</p>
-      <blockquote>„Die Prüfung ist hinter der Logik ihrer eigenen Fragen verborgen. Nur wer den Abschlusstest besteht, findet den Code.“</blockquote>
-      <p>Ihr entdeckt das folgende Prüfungsblatt mit Multiple-Choice-Fragen. Nur eine einzige Kombination ist korrekt – jede richtige Antwort ergibt eine Zahl.</p>
+      <p>Löse die folgenden Gleichungen und bilde aus den Ergebnissen (in der Reihenfolge x, y, z, t) einen vierstelligen Code:</p>
       <ol>
-        <li><strong>Welche Aussage ist wahr?</strong><br>
-          A. Zwei der Antworten sind korrekt.<br>
-          B. Diese Antwort ist falsch.<br>
-          C. Alle Antworten sind falsch.
-        </li>
-        <li><strong>Wenn eine Aussage falsch ist, welche ist es?</strong><br>
-          A. Diese Antwort ist falsch.<br>
-          B. A ist wahr.<br>
-          C. Beide vorherigen Antworten sind falsch.
-        </li>
-        <li><strong>Welcher Zahlenwert ergibt sich für das Wort „PRÜFUNG“, wenn A=1, B=2 ... Z=26?</strong><br>
-          A. 111<br>
-          B. 115<br>
-          C. 118
-        </li>
-        <li><strong>Wie oft kommt der Buchstabe E in diesem Text vor?</strong><br>
-          A. 7<br>
-          B. 11<br>
-          C. 13
-        </li>
+        <li><code>2x + 4 = 6</code></li>
+        <li><code>3y − 4 = 11</code></li>
+        <li><code>\u{1D465}/3 + 2 = 5</code> &nbsp;<span style="opacity:.8">(also <code>(z/3) + 2 = 5</code>)</span></li>
+        <li><code>2(t − 3) = 8</code></li>
       </ol>
-      <p><strong>Hinweis:</strong> Verwandle die Buchstaben deiner Antworten (z. B. „ABCA“) in Zahlen gemäß:<br>
-      A = 1, B = 2, C = 3</p>
+      <p style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Bitte nur die vier Ziffern eingeben (z.&nbsp;B. 8597).</p>
     </section>  
-    <input type="text" id="answer" placeholder="123">
+    <input type="text" id="answer" placeholder="Antwort (4-stelliger Code)">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
     <p id="message"></p>
   </main>
@@ -48,10 +50,6 @@
     let attempts = 0;
     const maxAttempts = 3;
     const lockDuration = 15000; // 15 secondes
-    const nextButton = document.getElementById('nextButton');
-    nextButton.addEventListener('click', () => {
-      window.location.href = '/';
-    });
 
     function checkAnswer() {
       const answer = document.getElementById('answer').value;
@@ -63,33 +61,34 @@
         return;
       }
 
-      if (answer.trim() === "2312") {
-        message.textContent = "✅ Glückwunsch! Der Code ist korrekt: 2312";
+      const normalized = answer.replace(/[^\d]/g, '').trim();
+      if (normalized === "8597") {
+        message.textContent = "✅ Glückwunsch! Der Code ist korrekt: 8597";
         message.style.color = "lightgreen";
         document.getElementById('answer').disabled = true;
         button.disabled = true;
 
-        // Lancer l’animation confetti
+        // Konfetti-Animation
         confetti({ particleCount: 200, spread: 80 });
 
-        // Attendre la confetti puis notifier le serveur et afficher le bouton Suivant
+        // Nach der Animation: Fortschritt speichern und Ergebnisse anzeigen
         setTimeout(() => {
           fetch('/progress/posten4', {
             method: 'POST',
-            credentials: 'include'    // <-- force l’envoi des cookies de session
-            })
-            .then(res => {
-              console.log('POST /progress/ →', res.status);
-              if (!res.ok) throw new Error('Échec enregistrement progrès');
-              return res.json();
-            })
-            .then(() => {
-              alert("🎉 Glückwunsch! Ihr habt das Spiel gewonnen!");
-            })
-            .catch(err => {
-              console.error(err);
-              message.textContent = 'Erreur interne, réessayez';
-            });
+            credentials: 'include'
+          })
+          .then(res => {
+            console.log('POST /progress/posten4 →', res.status);
+            if (!res.ok) throw new Error('Échec enregistrement progrès');
+            return res.json();
+          })
+          .then(() => {
+            window.location.href = '/results';
+          })
+          .catch(err => {
+            console.error(err);
+            message.textContent = 'Erreur interne, réessayez';
+          });
         }, 2000);
         
       } else {

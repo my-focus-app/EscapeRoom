@@ -2,11 +2,47 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
   <title>Escape Room: Die verschwundene Prüfung</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { min-height: 100svh; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #ecf0f1; background: #0b1520; }
+    header { position: relative; z-index: 1; text-align: center; padding: clamp(0.75rem, 2vw, 1.25rem); font-weight: 600; font-size: clamp(1rem, 2.5vw, 1.25rem); letter-spacing: .3px; }
+    main { position: relative; z-index: 1; width: min(92vw, 900px); margin: 0 auto; padding-bottom: clamp(2rem, 6vw, 4rem); }
+    .intro-screen h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: .5rem 0 0.5rem; line-height: 1.15; }
+    .intro-screen p { margin: 0 0 1rem; color: #bdc3c7; }
+    .story { font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.6; color: #dfe6e9; padding: .5rem 0; }
+    .start-button { display: grid; place-items: center; margin-top: clamp(1rem, 4vw, 2rem); }
+    .start-btn { display: inline-block; text-decoration: none; color: #fff; background: #e67e22; padding: clamp(.9rem, 2.8vw, 1.1rem) clamp(1.1rem, 3.2vw, 1.5rem); border-radius: 12px; font-weight: 700; font-size: clamp(1rem, 2.8vw, 1.25rem); box-shadow: 0 8px 16px rgba(0,0,0,.25); transition: transform .06s ease, background .2s ease; touch-action: manipulation; }
+    .start-btn:hover { background: #d35400; }
+    .start-btn:active { transform: translateY(1px); }
+
+    /* Binary background layer */
+    .binary-fog, .binary-matrix { position: fixed; inset: 0; pointer-events: none; }
+    .binary-fog { background: radial-gradient(120% 80% at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.6)); z-index: 0; }
+    .binary-matrix { z-index: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: clamp(8px, 1.6vw, 12px); line-height: 1; color: rgba(46, 204, 113, 0.18); opacity: .9; }
+    .binary-matrix .row { white-space: nowrap; will-change: transform; }
+
+    /* Scroll indicator (optional) */
+    .scroll-indicator { position: fixed; left: 50%; bottom: max(10px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 2; cursor: pointer; font-size: 1.5rem; opacity: .85; }
+
+    /* Reduced motion: prefer performance and accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .binary-matrix { display: none; }
+    }
+
+    /* Landscape phones: keep readable */
+    @media (max-height: 480px) and (orientation: landscape) {
+      header { padding: .5rem; }
+      main { padding-bottom: 1rem; }
+    }
+  </style>
 </head>
-</div>
 
 <body>
   
@@ -53,6 +89,8 @@
     <div class="row even" id="row38" style="--speed: 101s;"></div>
     <div class="row odd" id="row39" style="--speed: 199s;"></div>
   </div>
+
+  <button class="scroll-indicator" aria-label="Zum Inhalt scrollen">↓</button>
 
 <header>Escape Room: Die verschwundene Prüfung</header>
 
@@ -107,9 +145,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
+  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   AOS.init({
-    duration: 1500,
-    once: true
+    duration: prefersReduce ? 0 : 900,
+    once: true,
+    disable: prefersReduce
   });
 
   document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
@@ -126,10 +166,13 @@
   }
 
   window.onload = () => {
-    for (let i = 0; i < 40; i++) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const perRow = Math.max(400, Math.ceil(window.innerWidth / 6)); // scale with viewport
+    const rows = 40; // keep structure, just reduce characters
+    for (let i = 0; i < rows; i++) {
       const row = document.getElementById(`row${i}`);
       if (row) {
-        row.textContent = generateRandomBinary(20000);
+        row.textContent = reduce ? '' : generateRandomBinary(perRow);
       }
     }
   };

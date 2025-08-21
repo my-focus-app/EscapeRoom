@@ -1,21 +1,67 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
   <title>Admin Login</title>
   <style>
-    body { font-family: Arial; padding: 2rem; background: #f2f2f2; }
-    form { max-width: 300px; margin: auto; background: white; padding: 2rem; border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    input { width: 100%; padding: 0.5rem; margin-top: 1rem; }
-    button { width: 100%; padding: 0.7rem; margin-top: 1rem; background: #007bff; color: white; border: none; cursor: pointer; }
-    button:hover { background: #0056b3; }
+    :root{
+      --bg: #0b1520;
+      --panel: rgba(44,62,80,.88);
+      --text: #ecf0f1;
+      --muted: #bdc3c7;
+      --accent: #e67e22;
+      --accent-hover: #d35400;
+      --shadow: 0 8px 16px rgba(0,0,0,.35);
+    }
+    *,*::before,*::after{ box-sizing: border-box; }
+    html{ height:100%; }
+    body{
+      margin:0;
+      min-height:100svh; /* better on mobile than 100vh */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg) url('/img/image.png') no-repeat center/cover;
+      background-attachment: scroll;
+      display:grid; place-items:center;
+      padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    }
+    @media (min-width: 900px){ body{ background-attachment: fixed; } }
+
+    form{
+      width: min(92vw, 420px);
+      background: var(--panel);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      backdrop-filter: saturate(1.05) blur(3px);
+    }
+    h2{ margin: 0 0 .75rem; font-size: clamp(1.25rem, 3.2vw, 1.5rem); }
+    p.helper{ margin: 0 0 1rem; color: var(--muted); font-size: .95rem; }
+
+    label{ display:block; margin-top:.5rem; color: var(--muted); font-size:.95rem; }
+    input{
+      width:100%; margin-top:.35rem; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem;
+    }
+    button{
+      width:100%; margin-top: .9rem; padding:.95rem 1rem; border:none; border-radius:10px; font-size:1.05rem; cursor:pointer;
+      background: var(--accent); color:#fff; transition: transform .06s ease, background .2s ease; touch-action: manipulation;
+    }
+    button:hover{ background: var(--accent-hover); }
+    button:active{ transform: translateY(1px); }
+
+    /* Landscape phones */
+    @media (max-height: 480px) and (orientation: landscape){ body{ padding:.5rem; } form{ padding:1rem; } }
   </style>
 </head>
 <body>
   <form method="POST" action="/admin/login">
-    <h2>Connexion Admin</h2>
-    <input type="password" name="password" placeholder="Mot de passe admin" required>
-    <button type="submit">Se connecter</button>
+    <h2>Admin-Anmeldung</h2>
+    <p class="helper">Bitte Admin-Passwort eingeben.</p>
+    <label for="password">Passwort</label>
+    <input id="password" type="password" name="password" placeholder="Admin-Passwort" required autocomplete="current-password">
+    <button type="submit">Anmelden</button>
   </form>
 </body>
 </html>

@@ -1,22 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Escape Room: Die verschwundene Prüfung</title>
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root{
+      --panel-bg: rgba(44,62,80,0.85);
+      --text:#ecf0f1; --muted:#bdc3c7; --accent:#e67e22; --accent-hover:#d35400;
+    }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ height:100%; }
+    body{ margin:0; min-height:100svh; color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; display:grid; place-items:center; padding:max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+    header{ text-align:center; margin-bottom:.5rem; font-weight:600; font-size:clamp(1rem,2.5vw,1.25rem); }
+    main{ width:min(92vw,560px); background:var(--panel-bg); border-radius:12px; padding:clamp(1rem,3vw,1.5rem); backdrop-filter:saturate(1.1) blur(3px); box-shadow:0 8px 16px rgba(0,0,0,.3); }
+    h1{ margin:0 0 .75rem; font-size:clamp(1.4rem,3.5vw,2rem); line-height:1.2; }
+    .story p{ color:var(--muted); margin:.25rem 0; }
+    #answer{ width:100%; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; }
+    #validateButton,#nextButton{ width:100%; padding:.9rem 1rem; border:none; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; }
+    #validateButton{ background:var(--accent); color:#fff; }
+    #validateButton:hover{ background:var(--accent-hover); }
+    #validateButton:active{ transform:translateY(1px); }
+    #nextButton{ margin-top:.5rem; background:rgba(255,255,255,.1); color:#fff; }
+    @media (max-height:480px) and (orientation:landscape){ body{ padding:.5rem; } main{ padding:1rem; } }
+  </style>
 </head>
 <body>
   <header>Escape Room: Die verschwundene Prüfung</header>
   <main>
     <h1>Posten 3</h1>
     <section class="story" data-aos="fade-up">
-      <p>
-        🧩 1. Die erste Ziffer ist das Doppelte der dritten.
-        🧩 2. Die zweite Ziffer ist die Summe der ersten und der vierten.
-        🧩 3. Alle Ziffern des Codes sind gerade Zahlen und keine davon ist Null.
-      </p>
+      <p>Die römische Zahl „CCCXXVII“ entspricht welcher Zahl in unserer Schreibweise?</p>
+      <p style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Bitte nur die Zahl eingeben (z.&nbsp;B. 327).</p>
     </section>  
-    <input type="text" id="answer" placeholder="123">
+    <input type="text" id="answer" placeholder="Antwort (Zahl)">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
     <button id="nextButton" hidden>Posten 4</button>
     <p id="message"></p>
@@ -42,8 +60,9 @@
         return;
       }
 
-      if (answer.trim() === "6824") {
-        message.textContent = "✅ Bravo! Deine Zahl ist: 6824";
+      const normalized = answer.replace(/[^\d]/g, '').trim();
+      if (normalized === "327") {
+        message.textContent = "✅ Bravo! Deine Zahl ist: 327";
         message.style.color = "lightgreen";
         document.getElementById('answer').disabled = true;
         button.disabled = true;
@@ -55,18 +74,18 @@
         setTimeout(() => {
           fetch('/progress/posten3', {
             method: 'POST',
-            credentials: 'include'    // <-- force l’envoi des cookies de session
-            })
-            .then(res => {
-              console.log('POST /progress/posten4 →', res.status);
-              if (!res.ok) throw new Error('Échec enregistrement progrès');
-              return res.json();
-            })
-            .then(() => nextButton.hidden = false)
-            .catch(err => {
-              console.error(err);
-              message.textContent = 'Erreur interne, réessayez';
-            });
+            credentials: 'include'
+          })
+          .then(res => {
+            console.log('POST /progress/posten3 →', res.status);
+            if (!res.ok) throw new Error('Échec enregistrement progrès');
+            return res.json();
+          })
+          .then(() => nextButton.hidden = false)
+          .catch(err => {
+            console.error(err);
+            message.textContent = 'Erreur interne, réessayez';
+          });
         }, 2000);
         
       } else {
