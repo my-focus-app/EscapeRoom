@@ -19,8 +19,8 @@
     .story p, .story li, .story blockquote{ color:var(--muted); }
     ol{ padding-left: 1.1rem; }
     code, kbd { display:inline-block; padding:.1rem .35rem; border-radius:6px; background:rgba(0,0,0,.25); }
-    #answer{ width:100%; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; }
-    #validateButton{ width:100%; padding:.9rem 1rem; border:2px solid #000; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#000000; }
+    #answer{ width:100%; padding:.85rem 1rem; border:2px solid #000; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; background:#636363; color:#000; }
+    #validateButton{ width:100%; padding:.9rem 1rem; border:2px solid #000; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#ffffff; }
     #validateButton:hover{ background:var(--accent-hover); }
     #validateButton:active{ transform:translateY(1px); }
     /* Simple modal */
@@ -76,8 +76,8 @@
       }
 
       const normalized = answer.replace(/[^\d]/g, '').trim();
-      if (normalized === "8597") {
-        message.textContent = "✅ Glückwunsch! Der Code ist korrekt: 8597";
+      if (normalized === "5597") {
+        message.textContent = "✅ Glückwunsch! Der Code ist korrekt: 5597";
         message.style.color = "lightgreen";
         document.getElementById('answer').disabled = true;
         button.disabled = true;

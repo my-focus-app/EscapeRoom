@@ -17,9 +17,10 @@
     main{ width:min(92vw,560px); background:var(--panel-bg); border-radius:12px; padding:clamp(1rem,3vw,1.5rem); backdrop-filter:saturate(1.1) blur(3px); box-shadow:0 8px 16px rgba(0,0,0,.3); }
     h1{ margin:0 0 .75rem; font-size:clamp(1.4rem,3.5vw,2rem); line-height:1.2; }
     .story p{ color:var(--muted); margin:.25rem 0; }
-    #answer{ width:100%; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; }
+    #answer{ width:100%; padding:.85rem 1rem; border:2px solid #000; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; background:#636363; color:#000; }
     #validateButton,#nextButton{ width:100%; padding:.9rem 1rem; border:none; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; }
-    #validateButton{ width:100%; padding:.9rem 1rem; border:2px solid #000; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#000000; }    #validateButton:hover{ background:var(--accent-hover); }
+    #validateButton{ width:100%; padding:.9rem 1rem; border:2px solid #000; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#ffffff; }    
+    #validateButton:hover{ background:var(--accent-hover); }
     #validateButton:active{ transform:translateY(1px); }
     #nextButton{ margin-top:.5rem; background:rgba(255,255,255,.1); color:#fff; }
     @media (max-height:480px) and (orientation:landscape){ body{ padding:.5rem; } main{ padding:1rem; } }
