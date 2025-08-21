@@ -54,8 +54,8 @@
     <h1>Posten 2</h1>
     <p>
       Entschlüssele den folgenden Morsecode und gib das Ergebnis als Wort ein.<br><br>
-      <code style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size: 1.05rem;">--- -- ...</code><br><br>
-      <span style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Bitte in Kleinbuchstaben und ohne Leerzeichen eingeben.</span>
+      <code style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size: 1.05rem;">−−− −− ···  /  −··· ·−· ·· −−·</code><br><br>
+      <span style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Das Symbol <code>/</code> steht für ein Leerzeichen. Bitte alles in Kleinbuchstaben schreiben.</span>
     </p>
     <input type="text" id="answer" placeholder="Antwort">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
@@ -83,9 +83,9 @@
         return;
       }
 
-      const normalized = answer.toLowerCase().replace(/\s+/g, '').trim();
-      if (normalized === "oms") {
-        message.textContent = "✅ Bravo! Deine Lösung ist: oms";
+      const normalized = answer.toLowerCase().trim().replace(/\s+/g, ' ');
+      if (normalized === "oms brig") {
+        message.textContent = "✅ Bravo! Deine Lösung ist: oms brig";
         message.style.color = "lightgreen";
         document.getElementById('answer').disabled = true;
         button.disabled = true;
