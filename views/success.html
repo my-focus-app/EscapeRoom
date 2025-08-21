@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Escape Room – Erfolg</title>
+  <style>
+    :root {
+      --panel-bg: rgba(44,62,80,0.85);
+      --text: #ecf0f1;
+      --muted: #bdc3c7;
+      --accent: #27ae60;
+      --accent-hover: #219150;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: url("/images/bg.jpg") center/cover no-repeat fixed;
+      padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    }
+    main {
+      width: min(92vw, 560px);
+      background: var(--panel-bg);
+      border-radius: 12px;
+      padding: clamp(1.25rem, 4vw, 2rem);
+      text-align: center;
+      backdrop-filter: blur(3px) saturate(1.2);
+      box-shadow: 0 8px 16px rgba(0,0,0,.3);
+    }
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      margin: 0 0 1rem;
+      color: var(--accent);
+    }
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      margin-bottom: 1.5rem;
+    }
+    a.button {
+      display: inline-block;
+      padding: 0.9rem 1.2rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: background .2s ease;
+    }
+    a.button:hover { background: var(--accent-hover); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>🎉 Erfolg!</h1>
+    <p>Herzlichen Glückwunsch, du hast alle Rätsel gelöst.</p>
+    <a href="/home" class="button">Zurück zur Startseite</a>
+  </main>
+</body>
+</html>

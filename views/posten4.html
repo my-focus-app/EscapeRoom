@@ -20,9 +20,16 @@
     ol{ padding-left: 1.1rem; }
     code, kbd { display:inline-block; padding:.1rem .35rem; border-radius:6px; background:rgba(0,0,0,.25); }
     #answer{ width:100%; padding:.85rem 1rem; border:none; border-radius:8px; font-size:1rem; margin:.5rem 0 .75rem; }
-    #validateButton{ width:100%; padding:.9rem 1rem; border:none; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#fff; }
+    #validateButton{ width:100%; padding:.9rem 1rem; border:2px solid #000; border-radius:10px; font-size:1.05rem; cursor:pointer; transition:transform .06s ease, background .2s ease; background:var(--accent); color:#000000; }
     #validateButton:hover{ background:var(--accent-hover); }
     #validateButton:active{ transform:translateY(1px); }
+    /* Simple modal */
+    .modal{ position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.55); z-index: 50; }
+    .modal[hidden]{ display: none; }
+    .modal__dialog{ width: min(92vw, 480px); background: var(--panel-bg); color: var(--text); border-radius: 12px; padding: clamp(1rem, 3vw, 1.5rem); text-align: center; box-shadow: 0 12px 24px rgba(0,0,0,.4); backdrop-filter: saturate(1.1) blur(4px); }
+    .modal__title{ margin: 0 0 .5rem; font-size: clamp(1.25rem, 3vw, 1.6rem); }
+    .modal__text{ margin: 0 0 1rem; color: var(--muted); }
+    .modal__btn{ display: inline-block; margin-top: .25rem; padding: .8rem 1rem; border: 2px solid #000; border-radius: 10px; background: var(--accent); color: #000; font-weight: 600; cursor: pointer; }
     @media (max-height:480px) and (orientation:landscape){ body{ padding:.5rem; } main{ padding:1rem; } }
   </style>
 </head>
@@ -33,16 +40,23 @@
     <section class="story" data-aos="fade-up">
       <p>Löse die folgenden Gleichungen und bilde aus den Ergebnissen (in der Reihenfolge x, y, z, t) einen vierstelligen Code:</p>
       <ol>
-        <li><code>2x + 4 = 6</code></li>
-        <li><code>3y − 4 = 11</code></li>
-        <li><code>\u{1D465}/3 + 2 = 5</code> &nbsp;<span style="opacity:.8">(also <code>(z/3) + 2 = 5</code>)</span></li>
-        <li><code>2(t − 3) = 8</code></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>4</mn><mo>=</mo><mn>6</mn></mrow></math></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mi>y</mi><mo>−</mo><mn>4</mn><mo>=</mo><mn>11</mn></mrow></math></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>z</mi><mo>/</mo><mn>3</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>5</mn></mrow></math></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mo>(</mo><mi>t</mi><mo>−</mo><mn>3</mn><mo>)</mo><mo>=</mo><mn>8</mn></mrow></math></li>
       </ol>
-      <p style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Bitte nur die vier Ziffern eingeben (z.&nbsp;B. 8597).</p>
+      <p style="font-size:0.9rem;color:#bdc3c7;">Hinweis: Bitte nur die vier Ziffern eingeben.</p>
     </section>  
     <input type="text" id="answer" placeholder="Antwort (4-stelliger Code)">
     <button id="validateButton" onclick="checkAnswer()">Bestätigen</button>
     <p id="message"></p>
+    <div id="winModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="winTitle" hidden>
+      <div class="modal__dialog">
+        <h2 id="winTitle" class="modal__title">🎉 Glückwunsch!</h2>
+        <p class="modal__text">Ihr habt alle Rätsel gelöst. Großartige Arbeit!</p>
+        <button id="closeWinModal" class="modal__btn" type="button">Schließen</button>
+      </div>
+    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -83,7 +97,11 @@
             return res.json();
           })
           .then(() => {
-            window.location.href = '/results';
+            const modal = document.getElementById('winModal');
+            if (modal) modal.hidden = false;
+            document.getElementById('closeWinModal')?.addEventListener('click', () => {
+              modal.hidden = true;
+            });
           })
           .catch(err => {
             console.error(err);
